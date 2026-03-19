@@ -70,7 +70,10 @@ impl SsoLoginRequest {
 
             email_verified: get_claim!(email_verified),
 
-            target_roles: info_claims.and_then(|x| x.additional_claims().warpgate_roles.clone()),
+            target_roles: info_claims.and_then(|x| {
+                x.additional_claims().roles.clone()
+                    .or_else(|| x.additional_claims().warpgate_roles.clone())
+            }),
             admin_roles: info_claims
                 .and_then(|x| x.additional_claims().warpgate_admin_roles.clone()),
 
