@@ -94,7 +94,7 @@ impl SsoLoginRequest {
             {
                 Ok(Some(google_groups)) => (Some(google_groups.clone()), Some(google_groups)),
                 Ok(None) => (
-                    get_additional_claim!(warpgate_roles),
+                    get_additional_claim!(roles).or_else(|| get_additional_claim!(warpgate_roles)),
                     get_additional_claim!(warpgate_admin_roles),
                 ),
                 Err(e) => {
