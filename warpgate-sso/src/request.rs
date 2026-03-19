@@ -74,8 +74,10 @@ impl SsoLoginRequest {
                 x.additional_claims().roles.clone()
                     .or_else(|| x.additional_claims().warpgate_roles.clone())
             }),
-            admin_roles: info_claims
-                .and_then(|x| x.additional_claims().warpgate_admin_roles.clone()),
+            admin_roles: info_claims.and_then(|x| {
+                x.additional_claims().warpgate_admin_roles.clone()
+                    .or_else(|| x.additional_claims().roles.clone())
+            }),
 
             id_token: result.token.clone(),
         })
