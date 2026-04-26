@@ -243,6 +243,13 @@ impl TargetPostgresOptions {
             }));
         }
     }
+
+    pub fn set_credential_mapping(&mut self, username: String, password: Option<String>) {
+        self.username = username;
+        self.auth = Some(DatabaseTargetAuth::Password(DatabaseTargetPasswordAuth {
+            password: password.unwrap_or_default(),
+        }));
+    }
 }
 
 #[derive(Debug, Deserialize, Serialize, Clone, Object)]

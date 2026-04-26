@@ -348,8 +348,7 @@ impl<S: AsyncRead + AsyncWrite + Send + Unpin> PostgresSession<S> {
                     "Selected credential mapping for user {}",
                     user_info.username
                 );
-                postgres_options.username = mapping.username.clone();
-                postgres_options.password = mapping.password.clone();
+                postgres_options.set_credential_mapping(mapping.username.clone(), mapping.password.clone());
             } else {
                 warn!(
                     "No credential mapping matched for user {} (roles: {:?}), using default credentials",
